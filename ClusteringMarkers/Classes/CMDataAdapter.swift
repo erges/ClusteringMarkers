@@ -288,7 +288,7 @@ open class CMDataAdapter: NSObject, YMKClusterListener, YMKClusterTapListener, Y
         
         if let map = map, let bounds = bounds, needToMoveInUpdateVisibleArea(forceMove: forceMove) {
             
-            let cameraPosition = map.cameraPosition(with: YMKGeometry(boundingBox: bounds.getBoundingBox()))
+            let cameraPosition = map.cameraPosition(with: bounds.getBoundingBox())
             move(with: cameraPosition.target, zoom: zoomOutForBounds(cameraPosition.zoom), fast: true, isGestureScroll: false)
         }
     }
@@ -426,7 +426,7 @@ open class CMDataAdapter: NSObject, YMKClusterListener, YMKClusterTapListener, Y
             return res
         }
         
-        let cameraPosition = map.cameraPosition(with: YMKGeometry(boundingBox: bounds.getBoundingBox()))
+        let cameraPosition = map.cameraPosition(with: bounds.getBoundingBox())
         var zoom = cameraPosition.zoom
         let minClusterZoom = Float(self.minClusterZoom)
         
@@ -454,7 +454,7 @@ open class CMDataAdapter: NSObject, YMKClusterListener, YMKClusterTapListener, Y
                 zoom: zoom.isNaN ? 0 : zoom,
                 azimuth: map.cameraPosition.azimuth,
                 tilt: map.cameraPosition.tilt),
-            animation: YMKAnimation(
+            animationType: YMKAnimation(
                 type: fast ? .linear : .smooth,
                 duration: fast ? 0 : 0.2))
         
@@ -470,7 +470,7 @@ open class CMDataAdapter: NSObject, YMKClusterListener, YMKClusterTapListener, Y
                 zoom: 0,
                 azimuth: 0,
                 tilt: 0),
-            animation: YMKAnimation(
+            animationType: YMKAnimation(
                 type: YMKAnimationType.linear,
                 duration: 0))
     }
